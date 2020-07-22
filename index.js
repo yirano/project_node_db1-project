@@ -1,7 +1,18 @@
-const server = require('./server.js');
+const express = require('express')
 
-const PORT = process.env.PORT || 4000;
+const accountsRouter = require('./routers/accounts-router')
+
+const server = express()
+const PORT = process.env.PORT || 4000
+
+server.use(express.json())
+server.use('/accounts', accountsRouter)
+
+server.use((err, req, res, next) => {
+  console.log(err)
+  res.status(500).json({ message: 'Something went wrong' })
+})
 
 server.listen(PORT, () => {
-  console.log(`Listening on port ${PORT}...`);
-});
+  console.log(`Server running at ${PORT}...`)
+})

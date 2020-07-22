@@ -1,4 +1,4 @@
-const db = require('./dbConfig');
+const db = require('./dbConfig')
 
 module.exports = {
   find,
@@ -6,40 +6,40 @@ module.exports = {
   add,
   remove,
   update
-};
+}
 
-function find(query={}) {
-  let { page = 1, limit = 5, sortby = 'id', sortdir = 'asc' } = query;
-  const offset = limit * (page - 1);
+function find(query = {}) {
+  let { page = 1, limit = 5, sortby = 'id', sortdir = 'asc' } = query
+  const offset = limit * (page - 1)
 
   let rows = db('accounts')
     .orderBy(sortby, sortdir)
     .limit(limit)
-    .offset(offset);
+    .offset(offset)
 
-  return rows;
+  return rows
 }
 
 function findById(id) {
   return db('accounts')
     .where({ id })
-    .first();
+    .first()
 }
 
 async function add(account) {
-  const [id] = await db('accounts').insert(account);
+  const [id] = await db('accounts').insert(account)
 
-  return findById(id);
+  return findById(id)
 }
 
 function remove(id) {
   return db('accounts')
     .where({ id })
-    .del();
+    .del()
 }
 
 function update(id, changes) {
   return db('accounts')
     .where({ id })
-    .update(changes, '*');
+    .update(changes, '*')
 }
