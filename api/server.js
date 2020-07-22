@@ -1,9 +1,22 @@
-const express = require("express");
+const express = require("express")
 
-const db = require("../data/dbConfig.js");
+const db = require("../data/dbConfig.js")
 
-const server = express();
+const server = express()
 
-server.use(express.json());
+server.use(express.json())
 
-module.exports = server;
+server.get('/', async (req, res, next) => {
+  try {
+
+  } catch (error) {
+    next(error)
+  }
+})
+
+server.use((err, req, res, next) => {
+  console.log(err)
+  res.status(500).json({ errorMessage: "Something went wrong" })
+})
+
+module.exports = server
