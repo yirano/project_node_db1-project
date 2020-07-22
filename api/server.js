@@ -7,6 +7,7 @@ const server = express()
 server.use(express.json())
 
 
+
 server.get('/accounts', async (req, res, next) => {
   try {
     const accounts = await db
@@ -29,6 +30,19 @@ server.get('/accounts/:id', async (req, res, next) => {
     next(error)
   }
 })
+
+server.get('/sorted/accounts', async (req, res, next) => {
+  try {
+    const accounts = await db
+      .select('*')
+      .from('accounts')
+      .limit(5)
+    res.json(accounts)
+  } catch (error) {
+    next(error)
+  }
+})
+
 
 server.post('/accounts', async (req, res, next) => {
   try {
@@ -78,3 +92,7 @@ server.use((err, req, res, next) => {
 })
 
 module.exports = server
+
+
+/* SELECT DISTINCT "City" FROM 'Customers' */
+/* SELECT * FROM  "Suppliers" WHERE LENGTH("SupplierName") > 20 */
